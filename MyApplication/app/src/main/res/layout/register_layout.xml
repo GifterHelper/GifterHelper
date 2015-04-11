@@ -2,46 +2,75 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:background="">
-    <TextView
-        android:text="Sign Up"
-        android:gravity="center"
-        android:textSize="30sp"
+    android:background="#000014"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30"/>
-    <EditText
-        android:hint="Username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_gravity="left"
-        android:layout_marginTop="10dp"
-        android:text="Password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginTop="10dp"
-        android:text="Confirm Password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:layout_marginTop="10dp"
-        android:textColor="#FFFFFF"
-        android:text="Confirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ff373d4d"
-        />
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_weight="70">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="80">
+            <TextView
+                android:text="Register"
+                android:textColor="#CCCCE0"
+                android:gravity="center_horizontal"
+                android:layout_gravity="bottom"
+                android:textSize="30sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:orientation="vertical"
+            android:gravity="bottom">
+                <EditText
+                    android:hint="Username"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#CCCCE0"
+                    />
+                <TextView
+                    android:layout_gravity="left"
+                    android:layout_marginTop="10dp"
+                    android:text="Password"
+                    android:textColor="#CCCCE0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#CCCCE0"
+                    />
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:text="Confirm Password"
+                    android:textColor="#CCCCE0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#CCCCE0"/>
+                <Button
+                    android:layout_marginTop="10dp"
+                    android:text="Confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ec233d9c"
+                    android:textColor="#CCCCE0"
+                    />
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="30"></LinearLayout>
+        android:layout_weight="20"></LinearLayout>
 </LinearLayout>
