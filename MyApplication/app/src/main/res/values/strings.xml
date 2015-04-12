@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string-array name="sort_choices">
+        <item>Birthday</item>
+        <item>A-Z</item>
+        <item>Z-A</item>
+    </string-array>
 </resources>
