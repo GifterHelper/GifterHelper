@@ -14,6 +14,7 @@
         android:layout_marginBottom="60dp"
         android:textColor="#CCCCE0"/>
     <EditText
+        android:id="@+id/UsernameLogin"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:hint=" Username"
@@ -23,6 +24,7 @@
         android:background="#CCCCE0"
         android:textColor="#000000"/>
     <EditText
+        android:id="@+id/PasswordLogin"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:hint=" Password"
@@ -41,6 +43,7 @@
         android:background="#ec233d9c"
         android:textColor="#CCCCE0"/>
     <TextView
+        android:id="@+id/registerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
