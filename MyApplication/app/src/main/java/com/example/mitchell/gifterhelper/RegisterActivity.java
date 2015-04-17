@@ -21,8 +21,8 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.register_layout);
 
         Button register = (Button)findViewById(R.id.Confirm);
-        final EditText username = (EditText)findViewById(R.id.UserName);
-        final EditText password = (EditText)findViewById(R.id.Password);
+        final EditText username = (EditText)findViewById(R.id.RegisterUserName);
+        final EditText password = (EditText)findViewById(R.id.RegisterPassword);
         final EditText matchpassword = (EditText)findViewById(R.id.MatchPassword);
         register.setOnClickListener(new View.OnClickListener() {
             @Override

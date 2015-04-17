@@ -31,8 +31,8 @@
             android:layout_weight="10"
             android:orientation="vertical"
             android:gravity="bottom">
-                <EditText
-                    android:id="@+id/UserName"
+                <EditTexts
+                    android:id="@+id/RegisterUserName"
                     android:hint="Username"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <EditText
-                    android:id="@+id/Password"
+                    android:id="@+id/RegisterPassword"
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
