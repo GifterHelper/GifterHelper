@@ -31,7 +31,7 @@
             android:layout_weight="10"
             android:orientation="vertical"
             android:gravity="bottom">
-                <EditTexts
+                <EditText
                     android:id="@+id/RegisterUserName"
                     android:hint="Username"
                     android:layout_width="match_parent"
