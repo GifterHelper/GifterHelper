@@ -12,6 +12,16 @@ public class Profile {
     protected List<Item> wishlist;
     protected List<Item> history;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    protected String id;
+
     public Profile(){
         name = null;
         birthday = null;

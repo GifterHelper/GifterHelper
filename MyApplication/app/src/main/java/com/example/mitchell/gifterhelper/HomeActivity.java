@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,6 +22,7 @@ import java.util.List;
  * Created by Ethan on 4/12/2015.
  */
 public class HomeActivity extends ActionBarActivity {
+    public List<Friend> friends;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class HomeActivity extends ActionBarActivity {
         setContentView(R.layout.home_layout);
 
         ListView FriendView = (ListView) findViewById(R.id.FriendLayout);
-        List<Friend> friends = new ArrayList<Friend>();
+        friends = new ArrayList<Friend>();
         friends.add(new Friend("Jeff", new Birthday("March", 5),R.drawable.profile_default));
         friends.add(new Friend("Amy", new Birthday("September", 17),R.drawable.profile_default));
         friends.add(new Friend("Susan", new Birthday("April", 19),R.drawable.profile_default));
@@ -38,6 +40,15 @@ public class HomeActivity extends ActionBarActivity {
 
         ArrayAdapter friend_display = new FriendAdapter(HomeActivity.this, friends);
         FriendView.setAdapter(friend_display);
+
+        FriendView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(HomeActivity.this,FriendActivity.class);
+                intent.putExtra("id", friends.get(position).getId());
+                HomeActivity.this.startActivity(intent);
+            }
+        });
 
     }
 
@@ -67,4 +78,5 @@ public class HomeActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
