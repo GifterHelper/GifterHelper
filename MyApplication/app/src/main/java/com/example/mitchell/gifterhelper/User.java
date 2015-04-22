@@ -8,6 +8,9 @@ import java.util.List;
  */
 public class User extends Profile{
 
+    public User() {
+    }
+
     public User(String name) {
         super(name);
     }

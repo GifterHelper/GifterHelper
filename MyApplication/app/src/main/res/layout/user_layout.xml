@@ -4,8 +4,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000014"
-    android:theme="@style/AppTheme"
-    >
+    android:theme="@style/AppTheme">
+
     <android.support.v4.view.PagerTabStrip
     android:id="@+id/userprofile_pager_tab_strip"
     android:layout_width="match_parent"
@@ -15,4 +15,5 @@
     android:textColor="#fff"
     android:paddingTop="4dp"
     android:paddingBottom="4dp" />
+
 </android.support.v4.view.ViewPager>

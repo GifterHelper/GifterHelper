@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 /**
  * Created by Ethan on 4/18/2015.
@@ -13,7 +14,6 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
 
     final int PAGE_COUNT = 3;
     private String tabTitles[] = new String[]{"Wishlist","History","Friends"};
-    Context context;
 
     public UserPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -28,7 +28,7 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
     //TODO Set up so that we can go between fragments w/o having to reinitialize if possible
     @Override
     public Fragment getItem(int position) {
-
+        Log.d("GifterHelper", "Position " + position);
         switch(position)
         {
             case 0:
