@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="User Information"
+        android:key="pref_key_user_information">
+        <Preference
+            android:key="pref_key_user_email"
+            android:summary="UserEmail"
+            android:title="Registered Email"/>
+        <Preference
+            android:key="pref_key_user_password"
+            android:summary="change password"
+            android:title="User Password"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Privacy"
+        android:key="pref_key_user_privacy">
+        <CheckBoxPreference
+            android:key="pref_key_user_add_public"
+            android:summary="Allow all users to add you"
+            android:title="Public Add"
+            android:defaultValue="true"/>
+        <CheckBoxPreference
+            android:key="pref_key_user_history_public"
+            android:summary="Allow all friends to see history"
+            android:title="Share History"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -9,7 +9,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -20,18 +21,22 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:name=".HomeActivity"
             android:theme="@style/AppTheme"
             android:label="@string/app_name" >
         </activity>
         <activity android:name=".UserActivity"
             android:theme="@style/NoActionBar"
-            android:label="GifterHelper">
+            android:label="GifterHelper"
+            android:windowSoftInputMode="stateAlwaysHidden">
        </activity>
         <activity android:name=".FriendActivity"
             android:label="GifterHelper">
         </activity>
-
+        <activity android:name=".SettingsActivity"
+            android:label="GifterHelper">
+        </activity>
     </application>
 
 </manifest>

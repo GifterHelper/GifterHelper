@@ -2,11 +2,8 @@ package com.example.mitchell.gifterhelper;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,11 +37,18 @@ public class MainActivity extends Activity {
                     notfilled = true;
                 }
                 if (!notfilled) {
+                    //Backend check for user/pass
+                    User user = new User();
+                    user.setId("aa");
                     boolean validPassword = true;
                     if (validPassword) {
+                        //Get user id from backend
+                        String id = user.getId();
+                        Log.d("GifterHelper","Id is : " + id);
                         //Load homepage
                         Log.i("GifterHelper", "Valid Username");
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        intent.putExtra("id",id);
                         MainActivity.this.startActivity(intent);
                     } else {
                         Toast.makeText(MainActivity.this, "Password not valid", Toast.LENGTH_SHORT).show();

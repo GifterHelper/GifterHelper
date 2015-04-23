@@ -1,19 +1,15 @@
 package com.example.mitchell.gifterhelper;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.app.ActionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +19,12 @@ import java.util.List;
  */
 public class HomeActivity extends ActionBarActivity {
     public List<Friend> friends;
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.id = getIntent().getStringExtra("id");
+        Log.d("GifterHelper", "Id is " + id);
         setContentView(R.layout.home_layout);
 
         ListView FriendView = (ListView) findViewById(R.id.FriendLayout);
@@ -67,11 +65,14 @@ public class HomeActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(HomeActivity.this,SettingsActivity.class);
+            HomeActivity.this.startActivity(intent);
             return true;
         }
 
         else if(id == R.id.user_profile){
             Intent intent = new Intent(HomeActivity.this,UserActivity.class);
+            intent.putExtra("id",this.id);
             HomeActivity.this.startActivity(intent);
             return true;
         }
