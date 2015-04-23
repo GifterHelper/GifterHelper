@@ -1,11 +1,17 @@
 package com.example.mitchell.gifterhelper;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,6 +24,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
     
     private List<Item> Items;
     private List<Item> Items_display = null;
+    View view;
 
     public UserWishlistAdapter(Context context, int resource) {
         super(context, resource);
@@ -32,8 +39,8 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        view = convertView;
         //If the layout
         if(view == null){
 
@@ -44,6 +51,39 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
         //Sets the GUI Elements
         TextView name = (TextView) view.findViewById(R.id.wishlist_item_name);
         name.setText(Items_display.get(position).getName());
+
+        Button editItem = (Button) view.findViewById(R.id.wishlist_edit_item);
+        editItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                final EditText itemName = new EditText(view.getContext());
+                itemName.setText(Items_display.get(position).getName());
+                builder.setTitle("Edit Item");
+                builder.setView(itemName);
+                builder.setPositiveButton("Confirm",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String item = itemName.getText().toString();
+
+                        //Items_display.get(position).setName(item);
+                        //Items_display.
+                        Log.d("GifterHelper", "Editing item in user wishlist" + item);
+                        //Send pusher to check to check to see if friend e-mail exists
+                        //update current;
+                        hide_keyboard_from(view.getContext(),view);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Do nothing
+                        Log.d("GifterHelper", "Canceling editing item to user wishlist");
+                    }
+                });
+                builder.show();
+            }
+        });
         return view;
     }
 
@@ -73,5 +113,10 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
     @Override
     public Item getItem(int position) {
         return Items_display.get(position);
+    }
+
+    public static void hide_keyboard_from(Context context, View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

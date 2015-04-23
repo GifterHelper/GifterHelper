@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,12 @@ public class HomeActivity extends ActionBarActivity {
 
         ArrayAdapter friend_display = new FriendAdapter(HomeActivity.this, friends);
         FriendView.setAdapter(friend_display);
+
+        //Set spinner strings
+        Spinner spinner = (Spinner) findViewById(R.id.HomeSortFriendSpiner);
+        ArrayAdapter<CharSequence> spinnerArray = ArrayAdapter.createFromResource(this, R.array.sort_choices, android.R.layout.simple_spinner_item);
+        spinnerArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerArray);
 
         FriendView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
