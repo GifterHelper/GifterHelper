@@ -30,12 +30,12 @@ public class HomeActivity extends ActionBarActivity {
 
         ListView FriendView = (ListView) findViewById(R.id.FriendLayout);
         friends = new ArrayList<Friend>();
-        friends.add(new Friend("Jeff", new Birthday("March", 5),R.drawable.profile_default));
-        friends.add(new Friend("Amy", new Birthday("September", 17),R.drawable.profile_default));
-        friends.add(new Friend("Susan", new Birthday("April", 19),R.drawable.profile_default));
-        friends.add(new Friend("Rachel", new Birthday("December", 20),R.drawable.profile_default));
-        friends.add(new Friend("Arnal", new Birthday("June", 11),R.drawable.profile_default));
-        friends.add(new Friend("Win", new Birthday("January", 23),R.drawable.profile_default));
+        friends.add(new Friend("Jeff", "March 5",R.drawable.profile_default));
+        friends.add(new Friend("Amy", "September 17",R.drawable.profile_default));
+        friends.add(new Friend("Susan", "April 19",R.drawable.profile_default));
+        friends.add(new Friend("Rachel", "December 20",R.drawable.profile_default));
+        friends.add(new Friend("Arnal", "June 11",R.drawable.profile_default));
+        friends.add(new Friend("Win", "January 23",R.drawable.profile_default));
 
         ArrayAdapter friend_display = new FriendAdapter(HomeActivity.this, friends);
         FriendView.setAdapter(friend_display);

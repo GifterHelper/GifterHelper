@@ -43,7 +43,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 
             profileImg.setImageResource(friends.get(position).getImageRes());
             name.setText(friends.get(position).getName());
-            birthday.setText(friends.get(position).getBirthday().toString());
+            birthday.setText(friends.get(position).getBirthday());
 
         return view;
     }

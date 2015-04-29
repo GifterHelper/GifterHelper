@@ -1,6 +1,8 @@
 package com.example.mitchell.gifterhelper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +13,20 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
+import java.util.List;
+
 /**
  * Created by Ethan on 4/11/2015.
  */
 public class RegisterActivity extends Activity {
+
+    boolean validUserName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,22 +52,51 @@ public class RegisterActivity extends Activity {
                     notfilled = true;
                 }
                 if(!notfilled & password.getText().toString().equals(matchpassword.getText().toString())){
-                    //check to see if username has been used
+                    //check to see if the email has been used
+                    Log.d("GifterHelper", "Query Database with username " + username.getText().toString());
+                    ParseQuery<User> query = ParseQuery.getQuery(User.class);
+                    query.whereContains("username", username.getText().toString());
+                    query.findInBackground(new FindCallback<User>() {
 
-                    boolean validUserName = true;
-                    if(validUserName) {
-                        //Load login
-                        Log.i("GifterHelper", "Valid Username");
-                        Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
-                        RegisterActivity.this.startActivity(intent);
-                    }else{
-                        Toast.makeText(RegisterActivity.this,"Username taken",Toast.LENGTH_SHORT).show();
-                        Log.e("GifterHelper","Username Taken");
-                    }
+                        @Override
+                        public void done(List<User> users, ParseException e) {
+                            Log.d("GifterHelper", "Retrieved list of users");
+                            if(users.size() == 0){
+
+                                Log.i("GifterHelper", "Valid Username");
+                                //Create new user object
+                                User newUser = new User();
+                                newUser.setUserName(username.getText().toString());
+                                newUser.setPassword(password.getText().toString());
+                                //Save to database
+                                newUser.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                        builder.setMessage("Success")
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    }
+                                                });
+                                        builder.create().show();
+                                    }
+                                });
+
+                                Log.d("GifterHelper", "Saved user to database");
+                                //Reload App landing page
+                                Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                                RegisterActivity.this.startActivity(intent);
+
+                            }else{
+                                Toast.makeText(RegisterActivity.this,"Username Taken",Toast.LENGTH_SHORT).show();
+                                Log.i("GifterHelper","Username Taken");
+                            }
+                        }
+                    });
                 }else{
                     Toast.makeText(RegisterActivity.this,"Passwords do not match",Toast.LENGTH_SHORT).show();
                     //Clear confirmation password
-                    Log.e("GifterHelper","Incorrect Passowrd");
+                    Log.e("GifterHelper","Incorrect Password");
                     matchpassword.setText("");
                     Log.d("GifterHelper","Cleared match password edittext field");
                 }
