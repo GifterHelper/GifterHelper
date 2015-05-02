@@ -1,97 +1,45 @@
 package com.example.mitchell.gifterhelper;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Ethan on 4/16/2015.
  */
-public class Friend implements Profile{
-    protected String name;
-    protected String birthday;
-    protected int imageRes;
-    protected List<Item> wishlist;
-    protected List<Item> history;
-    protected String id;
-
-    @Override
-    public String getId() {
-        return null;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
+public class Friend {
+    protected User friend;
 
     public Friend(){
-        name = null;
-        birthday = null;
-    }
-    public Friend(String name) {
-        this.name = name;
+        friend = null;
     }
 
-    public Friend(String name, String birthday) {
-        this.name = name;
-        this.birthday = birthday;
+    public Friend(User friend) {
+        this.friend = friend;
     }
 
-    public Friend(String name, String birthday, int imageRes){
-        this.name = name;
-        this.birthday = birthday;
-        this.imageRes = imageRes;
+    public String getId() {
+        return friend.getId();
     }
 
-
-    @Override
     public String getName() {
-        return name;
+        return friend.getName();
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
     public String getBirthday() {
-        return this.birthday;
+       return friend.getBirthday();
     }
 
-    @Override
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
+    /*public int getImageRes() {
+       return friend.getImageRes();
+    }*/
 
-    @Override
-    public int getImageRes() {
-        return imageRes;
-    }
-
-    @Override
-    public void setImageRes(int imageRes) {
-        this.imageRes = imageRes;
-    }
-
-    @Override
     public List<Item> getWishlist() {
-        return wishlist;
+
+        return friend.getWishlist();
     }
 
-    @Override
-    public void setWishlist(List<Item> wishlist) {
-        this.wishlist = wishlist;
-    }
-
-    @Override
     public List<Item> getHistory() {
-        return  history;
+        return  friend.getHistory();
     }
 
-    @Override
-    public void setHistory(List<Item> history) {
-        this.history = history;
-    }
 }
 

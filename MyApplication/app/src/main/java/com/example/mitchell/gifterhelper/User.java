@@ -1,32 +1,21 @@
 package com.example.mitchell.gifterhelper;
 
+import com.parse.Parse;
 import com.parse.ParseObject;
-import  com.parse.ParseFile;
 import com.parse.ParseClassName;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Ethan on 4/16/2015.
  */
 @ParseClassName("User")
-public class User extends ParseObject implements Profile  {
-
-    protected String name;
-    protected int imageRes;
-    protected List<Item> wishlist;
-    protected List<Item> history;
-    protected String id;
+public class User extends ParseObject implements Profile {
 
     @Override
     public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
+        return this.getObjectId();
     }
 
     @Override
@@ -34,7 +23,6 @@ public class User extends ParseObject implements Profile  {
         return getString("name");
     }
 
-    @Override
     public void setName(String name) {
         put("name", name);
     }
@@ -44,19 +32,22 @@ public class User extends ParseObject implements Profile  {
         return getString("birthday");
     }
 
-    @Override
     public void setBirthday(String birthday) {
         put("birthday", birthday);
     }
 
-    @Override
-    public int getImageRes() {
-        return imageRes;
+    public ParseObject getImageRes() {
+        return (ParseObject)get("ProfileImage");
     }
 
-    @Override
+    /*
     public void setImageRes(int imageRes) {
         this.imageRes = imageRes;
+    }*/
+
+    public void initWishlist(){
+        List<Item> wishlist = new ArrayList<Item>();
+        put("wishlist",wishlist);
     }
 
     @Override
@@ -64,7 +55,6 @@ public class User extends ParseObject implements Profile  {
         return (List<Item>)get("wishlist");
     }
 
-    @Override
     public void setWishlist(List<Item> wishlist) {
         put("wishlist", wishlist);
     }
@@ -74,7 +64,21 @@ public class User extends ParseObject implements Profile  {
         return (List<Item>)get("history");
     }
 
+    public void initFriends(){
+        List<User> friends = new ArrayList<User>();
+        put("friends",friends);
+    }
+
     @Override
+    public List<User> getFriends() {
+        return (List<User>)get("friends");
+    }
+
+    public void initHistory(){
+        List<Item> history = new ArrayList<Item>();
+        put("history",history);
+    }
+
     public void setHistory(List<Item> history) {
         put("history", history);
     }
@@ -88,17 +92,20 @@ public class User extends ParseObject implements Profile  {
     }
 
     public void addItem(Item item) {
+        List<Item>wishlist = (List<Item>)get("wishlist");
         wishlist.add(item);
         put("wishlist", wishlist);
     }
 
     public void removeItem(Item item) {
-        this.wishlist.remove(item);
+        List<Item>wishlist = (List<Item>)get("wishlist");
+        wishlist.remove(item);
         put("wishlist", wishlist);
     }
 
     public void moveToHistory(Item item) {
-        this.history.add(item);
+        List<Item>history = (List<Item>)get("history");
+        history.add(item);
         put("history", history);
     }
 
@@ -109,5 +116,6 @@ public class User extends ParseObject implements Profile  {
     public void setPassword(String password) {
         put("password", password);
     }
+
 }
 

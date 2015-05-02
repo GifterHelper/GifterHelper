@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +53,13 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
         }
         //Sets the GUI Elements
         TextView name = (TextView) view.findViewById(R.id.wishlist_item_name);
-        name.setText(Items_display.get(position).getName());
+        try{
+            Item item = Items_display.get(position).fetchIfNeeded();
+            name.setText(item.getName());
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         Button editItem = (Button) view.findViewById(R.id.wishlist_edit_item);
         editItem.setOnClickListener(new View.OnClickListener() {
@@ -58,30 +67,35 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 final EditText itemName = new EditText(view.getContext());
-                itemName.setText(Items_display.get(position).getName());
-                builder.setTitle("Edit Item");
-                builder.setView(itemName);
-                builder.setPositiveButton("Confirm",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String item = itemName.getText().toString();
+                try{
+                    Item item = Items_display.get(position).fetchIfNeeded();
+                    itemName.setText(item.getName());
+                    builder.setTitle("Edit Item");
+                    builder.setView(itemName);
+                    builder.setPositiveButton("Confirm",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String item = itemName.getText().toString();
 
-                        //Items_display.get(position).setName(item);
-                        //Items_display.
-                        Log.d("GifterHelper", "Editing item in user wishlist" + item);
-                        //Send pusher to check to check to see if friend e-mail exists
-                        //update current;
-                        hide_keyboard_from(view.getContext(),view);
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Do nothing
-                        Log.d("GifterHelper", "Canceling editing item to user wishlist");
-                    }
-                });
-                builder.show();
+                            Items_display.get(position).setName(item);
+                            Log.d("GifterHelper", "Editing item in user wishlist" + item);
+                            //update current;
+                            Items_display.get(position).saveInBackground();
+                            hide_keyboard_from(view.getContext(), view);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Do nothing
+                            Log.d("GifterHelper", "Canceling editing item to user wishlist");
+                        }
+                    });
+                    builder.show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         return view;

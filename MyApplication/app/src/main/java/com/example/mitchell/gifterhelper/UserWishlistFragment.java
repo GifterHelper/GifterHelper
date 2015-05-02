@@ -16,29 +16,48 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ethan on 4/18/2015.
  */
 //Works similar to activities,this is a modified HomeActivity
 public class UserWishlistFragment extends Fragment {
+    ArrayList<Item> items;
     ListView itemView;
     View rootView;
+    UserWishlistAdapter wishlistAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //InflateLayout of fragment
         rootView = inflater.inflate(R.layout.user_wishlist_fragment,container,false);
         //Note need to use findViewById from the rootview as that is the view that we are going to be displaying
         itemView = (ListView) rootView.findViewById(R.id.UserWishList);
-        ArrayList<Item> items = new ArrayList<Item>();
-        items.add(new Item("Xbox One"));
-        items.add(new Item("Trading Cards"));
-        items.add(new Item("Printer Paper"));
 
-        final UserWishlistAdapter wishlistAdapter = new UserWishlistAdapter(getActivity().getBaseContext(),items);
-        itemView.setAdapter(wishlistAdapter);
-        itemView.setTextFilterEnabled(true);
+        String id = getActivity().getIntent().getStringExtra("id");
+        items = new ArrayList<Item>();
+
+        ParseQuery<User> userQuery = new ParseQuery<User>(User.class);
+        userQuery.getInBackground(id, new GetCallback<User>() {
+            @Override
+            public void done(User user, ParseException e) {
+                items = (ArrayList<Item>) user.getWishlist();
+                Log.d("GifterHelper", "Wishlist size : " + items.size());
+                wishlistAdapter = new UserWishlistAdapter(getActivity().getBaseContext(), items);
+                itemView.setAdapter(wishlistAdapter);
+                itemView.setTextFilterEnabled(true);
+            }
+        });
+
+
         final EditText itemNameSearch = (EditText) rootView.findViewById(R.id.UserWishList_search);
         itemNameSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -66,11 +85,26 @@ public class UserWishlistFragment extends Fragment {
                 builder.setPositiveButton("Confirm",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String item = itemName.getText().toString();
-                        Log.d("GifterHelper", "Adding item to user wishlist" + item);
-                        //Send pusher to check to check to see if friend e-mail exists
+                        final String itemNamestr = itemName.getText().toString();
+                        Log.d("GifterHelper", "Adding item to user wishlist" + itemNamestr);
+                        ParseQuery<User> userQuery = new ParseQuery<User>(User.class);
+                        userQuery.getInBackground(getActivity().getIntent().getStringExtra("id"), new GetCallback<User>() {
+                            @Override
+                            public void done(User user, ParseException e) {
+                                Item item = new Item();
+                                item.setName(itemNamestr);
+                                Log.d("GifterHelper", "before add item to list " + user.getWishlist().size());
+                                user.addItem(item);
+                                user.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        Log.d("GifterHelper", "added item to list ");
+                                    }
+                                });
+                            }
+                        });
                         //update current;
-                        hide_keyboard_from(getActivity().getBaseContext(),getView());
+                        hide_keyboard_from(getActivity().getBaseContext(), getView());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

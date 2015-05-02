@@ -17,7 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ethan on 4/18/2015.
@@ -26,7 +31,9 @@ public class UserFriendsFragment extends Fragment {
     ListView friends;
     String id;
     UserFriendAdapter userFriendAdapter;
+    ArrayList<Friend> friendList;
     View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //InflateLayout of fragment
@@ -34,14 +41,24 @@ public class UserFriendsFragment extends Fragment {
         friends = (ListView) view.findViewById(R.id.UserFriendsList);
 
         EditText friendSearch = (EditText) view.findViewById(R.id.UserSearchFriend);
-        ArrayList<Friend> friendList = new ArrayList<Friend>();
-        friendList.add(new Friend("Name"));
+        friendList = new ArrayList<Friend>();
         //We get the id of the user from the UserActivity
         this.id = ((UserActivity)getActivity()).getID();
         Log.d("GifterHelper", "id " + id);
-        //Pull list of friends?
-        userFriendAdapter = new UserFriendAdapter(getActivity().getBaseContext(), friendList);
-        friends.setAdapter(userFriendAdapter);
+        //Pull list of friends
+        ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
+        userParseQuery.getInBackground(id,new GetCallback<User>() {
+                    @Override
+                    public void done(User user, ParseException e) {
+                        List<User> friendUser = user.getFriends();
+                        for(User friend : friendUser)
+                        {
+                            friendList.add(new Friend(friend));
+                        }
+                        userFriendAdapter = new UserFriendAdapter(getActivity().getBaseContext(), friendList);
+                        friends.setAdapter(userFriendAdapter);
+                    }
+                });
 
         friendSearch.addTextChangedListener(new TextWatcher() {
             @Override

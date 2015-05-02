@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,7 @@ import java.util.List;
  */
 public class HomeActivity extends ActionBarActivity {
     public List<Friend> friends;
+    private ListView FriendView;
     String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +33,26 @@ public class HomeActivity extends ActionBarActivity {
         Log.d("GifterHelper", "Id is " + id);
         setContentView(R.layout.home_layout);
 
-        ListView FriendView = (ListView) findViewById(R.id.FriendLayout);
+        FriendView = (ListView) findViewById(R.id.FriendLayout);
         friends = new ArrayList<Friend>();
-        friends.add(new Friend("Jeff", "March 5",R.drawable.profile_default));
-        friends.add(new Friend("Amy", "September 17",R.drawable.profile_default));
-        friends.add(new Friend("Susan", "April 19",R.drawable.profile_default));
-        friends.add(new Friend("Rachel", "December 20",R.drawable.profile_default));
-        friends.add(new Friend("Arnal", "June 11",R.drawable.profile_default));
-        friends.add(new Friend("Win", "January 23",R.drawable.profile_default));
+        ParseQuery<User> query = new ParseQuery<User>(User.class);
+        query.getInBackground(id,new GetCallback<User>() {
+            @Override
+            public void done(User user, ParseException e) {
+                if(user == null){
+                    Log.e("GifterHelper", "Could not get id");
+                }else{
+                    List<User> friendUser = user.getFriends();
 
-        ArrayAdapter friend_display = new FriendAdapter(HomeActivity.this, friends);
-        FriendView.setAdapter(friend_display);
+                    for(User friend : friendUser){
+                        friends.add(new Friend(friend));
+                    }
+                    ArrayAdapter friend_display = new FriendAdapter(HomeActivity.this, friends);
+                    FriendView.setAdapter(friend_display);
+                }
+            }
+        });
+
 
         //Set spinner strings
         Spinner spinner = (Spinner) findViewById(R.id.HomeSortFriendSpiner);

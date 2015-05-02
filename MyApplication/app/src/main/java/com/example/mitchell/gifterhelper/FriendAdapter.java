@@ -41,7 +41,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
             TextView name = (TextView) view.findViewById(R.id.FriendName_Home);
             TextView birthday = (TextView) view.findViewById(R.id.FriendBirthday_Home);
 
-            profileImg.setImageResource(friends.get(position).getImageRes());
+            //profileImg.setImageResource(friends.get(position).getImageRes());
             name.setText(friends.get(position).getName());
             birthday.setText(friends.get(position).getBirthday());
 

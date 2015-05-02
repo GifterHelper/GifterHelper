@@ -9,13 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.content.Intent;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
@@ -61,15 +58,18 @@ public class RegisterActivity extends Activity {
                         @Override
                         public void done(List<User> users, ParseException e) {
                             Log.d("GifterHelper", "Retrieved list of users");
-                            if(users.size() == 0){
+                            if (users.size() == 0) {
 
                                 Log.i("GifterHelper", "Valid Username");
                                 //Create new user object
-                                User newUser = new User();
-                                newUser.setUserName(username.getText().toString());
-                                newUser.setPassword(password.getText().toString());
+                                User user = new User();
+                                user.setUserName(username.getText().toString());
+                                user.setPassword(password.getText().toString());
+                                user.initFriends();
+                                user.initWishlist();
+                                user.initHistory();
                                 //Save to database
-                                newUser.saveInBackground(new SaveCallback() {
+                                user.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
                                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
@@ -84,12 +84,12 @@ public class RegisterActivity extends Activity {
 
                                 Log.d("GifterHelper", "Saved user to database");
                                 //Reload App landing page
-                                Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                 RegisterActivity.this.startActivity(intent);
 
-                            }else{
-                                Toast.makeText(RegisterActivity.this,"Username Taken",Toast.LENGTH_SHORT).show();
-                                Log.i("GifterHelper","Username Taken");
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Username Taken", Toast.LENGTH_SHORT).show();
+                                Log.i("GifterHelper", "Username Taken");
                             }
                         }
                     });

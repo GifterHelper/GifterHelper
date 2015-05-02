@@ -1,52 +1,43 @@
 package com.example.mitchell.gifterhelper;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by Ethan on 4/16/2015.
  */
-public class Item {
-    //TODO: Builder?
-
-    private String name;
-    private int price;
-    private boolean purchased;
-    private boolean willBuy;
-
-    public Item() {
-    }
-
-    public Item(String name) {
-        this.name = name;
-    }
+@ParseClassName("Item")
+public class Item extends ParseObject {
 
     public String getName() {
-        return name;
+        return getString("name");
     }
 
     public void setName(String name) {
-        this.name = name;
+        put("name", name);
     }
 
     public int getPrice() {
-        return price;
+        return getInt("price");
     }
 
     public void setPrice(int price) {
-        this.price = price;
+        put("price", price);
     }
 
     public boolean getPurchased() {
-        return purchased;
+        return getBoolean("purchased");
     }
 
     public void setPurchased(boolean purchased) {
-        this.purchased = purchased;
+        put("purchased", purchased);
     }
 
     public boolean getWillBuy() {
-        return willBuy;
+        return getBoolean("getWillBuy");
     }
 
     public void setWillBuy(boolean willBuy) {
-        this.willBuy = willBuy;
+        put("willBuy",willBuy);
     }
 }

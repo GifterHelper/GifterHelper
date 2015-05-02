@@ -10,7 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.ParseObject;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 
 public class MainActivity extends Activity {
@@ -41,22 +46,40 @@ public class MainActivity extends Activity {
                 }
                 if (!notfilled) {
                     //Backend check for user/pass
-                    User user = new User();
-                    user.setId("aa");
-                    boolean validPassword = true;
-                    if (validPassword) {
-                        //Get user id from backend
-                        String id = user.getId();
-                        Log.d("GifterHelper","Id is : " + id);
-                        //Load homepage
-                        Log.i("GifterHelper", "Valid Username");
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                        intent.putExtra("id",id);
-                        MainActivity.this.startActivity(intent);
-                    } else {
-                        Toast.makeText(MainActivity.this, "Password not valid", Toast.LENGTH_SHORT).show();
-                        Log.e("GifterHelper", "Password Incorrect");
-                    }
+                    ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
+                    userParseQuery.whereContains("username", username.getText().toString());
+                    userParseQuery.findInBackground(new FindCallback<User>() {
+                        @Override
+                        public void done(List<User> users, ParseException e) {
+                            if(users.size() > 1){
+                                Log.d("GifterHelper", "Retrieved more than one user");
+                            }
+                            else if(users.size() == 0){
+                                Toast.makeText(MainActivity.this, "Username/Password not valid", Toast.LENGTH_SHORT).show();
+                                Log.d("GifterHelper","Invalid username");
+                            }else{
+                                if(password.getText().toString().equals(users.get(0).getPassword())){
+                                    //Get user id from backend
+                                    String id = users.get(0).getId();
+                                    String userName = users.get(0).getUserName();
+                                    String userPass = users.get(0).getPassword();
+                                    Log.d("GifterHelper","Id is : " + id);
+                                    Log.d("GifterHelper", "Name is : " + userName);
+                                    Log.d("GifterHelper", "Password is : " + userPass);
+                                    //Load homepage
+                                    Log.i("GifterHelper", "Valid Username");
+                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    intent.putExtra("id",id);
+                                    MainActivity.this.startActivity(intent);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Username/Password not valid", Toast.LENGTH_SHORT).show();
+                                    Log.e("GifterHelper", "Password Incorrect");
+                                }
+
+                            }
+                        }
+                    });
+
                 }
             }
 
@@ -65,7 +88,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //Load register page
-                Log.i("GifterHelper", "Valid Username");
+                Log.i("GifterHelper", "Registering");
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                 MainActivity.this.startActivity(intent);
             }

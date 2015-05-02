@@ -22,9 +22,6 @@ public class FriendHistoryFragment extends Fragment {
         ListView listView = (ListView) mainView.findViewById(R.id.friend_wishlist);
         ListView itemView = (ListView) mainView.findViewById(R.id.UserWishList);
         ArrayList<Item> items = new ArrayList<Item>();
-        items.add(new Item("Potato"));
-        items.add(new Item("Headphones"));
-        items.add(new Item("Laptop"));
         FriendHistoryAdapter friendlyAdapter = new FriendHistoryAdapter(getActivity().getBaseContext(),items);
         listView.setAdapter(friendlyAdapter);
         return mainView;

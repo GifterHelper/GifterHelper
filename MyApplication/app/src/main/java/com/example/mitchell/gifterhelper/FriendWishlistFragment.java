@@ -22,9 +22,6 @@ public class FriendWishlistFragment extends Fragment {
         ListView listView = (ListView) mainView.findViewById(R.id.friend_wishlist);
         ListView itemView = (ListView) mainView.findViewById(R.id.UserWishList);
         ArrayList<Item> items = new ArrayList<Item>();
-        items.add(new Item("Playstation"));
-        items.add(new Item("Hearthstone packs"));
-        items.add(new Item("Riot Points"));
         FriendsWishlistAdapter friendlyAdapter = new FriendsWishlistAdapter(getActivity().getBaseContext(),items);
         listView.setAdapter(friendlyAdapter);
         return mainView;
