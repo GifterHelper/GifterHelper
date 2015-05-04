@@ -1,5 +1,7 @@
 package com.example.mitchell.gifterhelper;
 
+import com.parse.ParseException;
+
 import java.util.List;
 
 /**
@@ -41,5 +43,14 @@ public class Friend {
         return  friend.getHistory();
     }
 
+    public String getUserName() { return friend.getUserName();}
+
+    public void fetIfNeeded() {
+        try {
+            friend.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

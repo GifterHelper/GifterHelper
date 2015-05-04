@@ -40,10 +40,15 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
             ImageView profileImg = (ImageView) view.findViewById(R.id.FriendProfile_Home);
             TextView name = (TextView) view.findViewById(R.id.FriendName_Home);
             TextView birthday = (TextView) view.findViewById(R.id.FriendBirthday_Home);
+            try{
+                //profileImg.setImageResource(friends.get(position).getImageRes());
+                friends.get(position).fetIfNeeded();
+                name.setText(friends.get(position).getUserName());
+                birthday.setText(friends.get(position).getBirthday());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
 
-            //profileImg.setImageResource(friends.get(position).getImageRes());
-            name.setText(friends.get(position).getName());
-            birthday.setText(friends.get(position).getBirthday());
 
         return view;
     }

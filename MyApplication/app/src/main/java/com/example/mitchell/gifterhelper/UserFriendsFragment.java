@@ -17,9 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ import java.util.List;
  */
 public class UserFriendsFragment extends Fragment {
     ListView friends;
+    User userLocal;
     String id;
     UserFriendAdapter userFriendAdapter;
     ArrayList<Friend> friendList;
@@ -50,6 +53,7 @@ public class UserFriendsFragment extends Fragment {
         userParseQuery.getInBackground(id,new GetCallback<User>() {
                     @Override
                     public void done(User user, ParseException e) {
+                        userLocal = user;
                         List<User> friendUser = user.getFriends();
                         for(User friend : friendUser)
                         {
@@ -67,7 +71,11 @@ public class UserFriendsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                userFriendAdapter.filter(s.toString());
+                if(s == null){
+                    return;
+                }else{
+                    userFriendAdapter.filter(s.toString());
+                }
             }
 
             @Override
@@ -83,14 +91,34 @@ public class UserFriendsFragment extends Fragment {
                 final EditText friendEmail = new EditText(view.getContext());
                 builder.setTitle("Add Friend");
                 builder.setView(friendEmail);
-                builder.setPositiveButton("Confirm",new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String email = friendEmail.getText().toString();
-                        Log.d("GifterHelper", "Adding friend with email " + email);
+                        final String email = friendEmail.getText().toString();
+                        ParseQuery<User> parseQuery = new ParseQuery<User>(User.class);
+                        parseQuery.whereContains("username", email);
+                        parseQuery.findInBackground(new FindCallback<User>() {
+                            @Override
+                            public void done(List<User> list, ParseException e) {
+                                if (list.size() > 1 || list.size() == 0) {
+                                    Log.d("GifterHelper", "Size : " + list.size());
+                                    Log.d("GifterHelper", "Did not add friend " + email);
+                                } else {
+                                    friendList.add(new Friend(list.get(0)));
+                                    userLocal.addFriend(list.get(0));
+                                    userLocal.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            Log.d("GifterHelper", "Added friend with email " + email);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
                         //Send pusher to check to check to see if friend e-mail exists
                         //update current;
-                       hide_keyboard_from(getActivity().getBaseContext(),getView());
+                        hide_keyboard_from(getActivity().getBaseContext(), getView());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
                     //Backend check for user/pass
                     ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
                     userParseQuery.whereContains("username", username.getText().toString());
+                    Log.d("GifterHelper", "Query for user");
                     userParseQuery.findInBackground(new FindCallback<User>() {
                         @Override
                         public void done(List<User> users, ParseException e) {

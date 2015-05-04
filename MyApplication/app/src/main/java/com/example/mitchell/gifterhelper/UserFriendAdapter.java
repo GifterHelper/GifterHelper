@@ -40,7 +40,7 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
             view = inflater.inflate(R.layout.user_friends_layout,null);
         }
         TextView name = (TextView) view.findViewById(R.id.UserFriendName);
-        name.setText(friends_display.get(position).getName());
+        name.setText(friends_display.get(position).getUserName());
         Button removeFriend = (Button) view.findViewById(R.id.UserRemoveFriend);
         removeFriend.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -56,9 +56,9 @@ public class RegisterActivity extends Activity {
                     query.findInBackground(new FindCallback<User>() {
 
                         @Override
-                        public void done(List<User> users, ParseException e) {
+                        public void done(List<User> users, ParseException e){
                             Log.d("GifterHelper", "Retrieved list of users");
-                            if (users.size() == 0) {
+                            if (users == null || users.size() == 0) {
 
                                 Log.i("GifterHelper", "Valid Username");
                                 //Create new user object
@@ -76,16 +76,16 @@ public class RegisterActivity extends Activity {
                                         builder.setMessage("Success")
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int id) {
+                                                        Log.d("GifterHelper", "Saved user to database");
+                                                        //Reload App landing page
+                                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                        RegisterActivity.this.startActivity(intent);
+
                                                     }
                                                 });
                                         builder.create().show();
                                     }
                                 });
-
-                                Log.d("GifterHelper", "Saved user to database");
-                                //Reload App landing page
-                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                RegisterActivity.this.startActivity(intent);
 
                             } else {
                                 Toast.makeText(RegisterActivity.this, "Username Taken", Toast.LENGTH_SHORT).show();
@@ -96,9 +96,9 @@ public class RegisterActivity extends Activity {
                 }else{
                     Toast.makeText(RegisterActivity.this,"Passwords do not match",Toast.LENGTH_SHORT).show();
                     //Clear confirmation password
-                    Log.e("GifterHelper","Incorrect Password");
+                    Log.e("GifterHelper", "Incorrect Password");
                     matchpassword.setText("");
-                    Log.d("GifterHelper","Cleared match password edittext field");
+                    Log.d("GifterHelper", "Cleared match password edittext field");
                 }
             }
         });

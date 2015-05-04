@@ -117,5 +117,10 @@ public class User extends ParseObject implements Profile {
         put("password", password);
     }
 
+    public void addFriend(User friend){
+        List<User> friends = (List<User>)get("friends");
+        friends.add(friend);
+        put("friends", friends);
+    }
 }
 
