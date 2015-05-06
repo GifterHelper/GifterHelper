@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
+    android:background="#000014"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,22 +13,30 @@
             android:id="@+id/FriendSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="#CCCCE0"
+            />
         <Spinner
             android:id="@+id/HomeSortFriendSpiner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:textColor="#CCCCE0"
+            >
         </Spinner>
     </LinearLayout>
     <ListView
+
         android:id="@+id/FriendLayout"
+
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:textColor="#CCCCE0"
+        >
     </ListView>
 </LinearLayout>

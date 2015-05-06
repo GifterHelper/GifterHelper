@@ -3,7 +3,9 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
-    android:layout_margin="15dp">
+    android:layout_margin="15dp"
+    android:background="@drawable/border_ui"
+    >
     <ImageView
         android:id="@+id/FriendProfile_Home"
         android:layout_width="80dp"
@@ -27,4 +29,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>
