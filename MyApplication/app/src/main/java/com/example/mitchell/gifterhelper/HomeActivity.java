@@ -64,7 +64,8 @@ public class HomeActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(HomeActivity.this,FriendActivity.class);
-                intent.putExtra("id", friends.get(position).getId());
+                intent.putExtra("friendId", friends.get(position).getId());
+                intent.putExtra("userId", getIntent().getStringExtra("id"));
                 HomeActivity.this.startActivity(intent);
             }
         });

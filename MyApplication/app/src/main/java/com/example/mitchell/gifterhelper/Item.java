@@ -40,4 +40,12 @@ public class Item extends ParseObject {
     public void setWillBuy(boolean willBuy) {
         put("willBuy",willBuy);
     }
+
+    public String getBuyerUser() {
+        return getString("BuyerUser");
+    }
+
+    public void setBuyerUser(String user) {
+        put("BuyerUser",user);
+    }
 }

@@ -17,6 +17,6 @@ public class GifterHelper extends Application {
         Parse.initialize(this, "IFe87iaHpQRu7vEyrX44YZVxIkwIQRWb6BaQbEL3", "6WX3SBUcMfd12TlpQORRaaMgh62J700W9oKpi8AH");
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Item.class);
-        ParseObject.registerSubclass(Birthday.class);
+
     }
 }
