@@ -1,4 +1,4 @@
-package com.example.mitchell.gifterhelper;
+package com.gifterhelper;
 
 import android.app.Activity;
 import android.app.AlertDialog;

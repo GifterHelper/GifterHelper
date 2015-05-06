@@ -1,4 +1,4 @@
-package com.example.mitchell.gifterhelper;
+package com.gifterhelper;
 
 import android.content.Context;
 import android.content.SharedPreferences;

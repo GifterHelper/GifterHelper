@@ -1,4 +1,4 @@
-package com.example.mitchell.gifterhelper;
+package com.gifterhelper;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

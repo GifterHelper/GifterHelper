@@ -1,4 +1,4 @@
-package com.example.mitchell.gifterhelper;
+package com.gifterhelper;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

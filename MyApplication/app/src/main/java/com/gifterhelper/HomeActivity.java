@@ -1,4 +1,4 @@
-package com.example.mitchell.gifterhelper;
+package com.gifterhelper;
 
 import android.content.Intent;
 import android.os.Bundle;
