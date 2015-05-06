@@ -61,18 +61,30 @@ public class FriendsWishlistAdapter extends ArrayAdapter<Item> {
         }
         final Button buyButton = (Button) view.findViewById(R.id.friend_button_wishlist);
         final Button colorButton = (Button) view.findViewById(R.id.friends_box_wishlist);
+
+        //Sets up the default values for the color button and text for buy button
+        if (item.getPurchased()) {
+            buyButton.setText("Cancel");
+            colorButton.setBackgroundColor(Color.RED);
+        } else if (!item.getPurchased()) {
+            buyButton.setText("Will Buy");
+            colorButton.setBackgroundColor(Color.GREEN);
+        }
+
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (item.getPurchased() && item.getBuyerUser().equals(id)) {
                     item.setPurchased(false);
+                    item.saveInBackground();
                     buyButton.setText("Will Buy");
-                    colorButton.setBackgroundColor(Color.RED);
+                    colorButton.setBackgroundColor(Color.GREEN);
                 } else if (!item.getPurchased()) {
                     item.setPurchased(true);
                     item.setBuyerUser(id);
+                    item.saveInBackground();
                     buyButton.setText("Cancel");
-                    colorButton.setBackgroundColor(Color.GREEN);
+                    colorButton.setBackgroundColor(Color.RED);
                 }
 
             }
