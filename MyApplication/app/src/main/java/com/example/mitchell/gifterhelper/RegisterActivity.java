@@ -68,6 +68,7 @@ public class RegisterActivity extends Activity {
                                 user.initFriends();
                                 user.initWishlist();
                                 user.initHistory();
+                                user.setDefaultSettings();
                                 //Save to database
                                 user.saveInBackground(new SaveCallback() {
                                     @Override

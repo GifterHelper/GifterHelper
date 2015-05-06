@@ -36,6 +36,26 @@ public class User extends ParseObject implements Profile {
         put("birthday", birthday);
     }
 
+    public void setDefaultSettings(){
+        put("publicAdd", true);
+        put("publicHistory", true);
+    }
+    public void setPublicAdd(Boolean value){
+        put("publicAdd", value);
+    }
+
+    public boolean getPublicAdd(){
+        return getBoolean("publicAdd");
+    }
+
+    public void setShareHistory(Boolean value){
+        put("publicHistory", value);
+    }
+
+    public boolean getShareHistory(){
+        return getBoolean("publicHistory");
+    }
+
     public ParseObject getImageRes() {
         return (ParseObject)get("ProfileImage");
     }

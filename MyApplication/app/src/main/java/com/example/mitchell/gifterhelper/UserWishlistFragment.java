@@ -66,7 +66,11 @@ public class UserWishlistFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                wishlistAdapter.filter(s.toString());
+                if(wishlistAdapter == null || s == null){
+                    //wishlistadapter was not init?
+                }else{
+                    wishlistAdapter.filter(s.toString());
+                }
             }
 
             @Override

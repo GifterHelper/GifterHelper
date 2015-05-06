@@ -3,14 +3,22 @@
     <PreferenceCategory
         android:title="User Information"
         android:key="pref_key_user_information">
-        <Preference
+        <EditTextPreference
+            android:key="pref_key_user_name"
+            android:summary="Change name"
+            android:title="Name"/>
+        <EditTextPreference
             android:key="pref_key_user_email"
             android:summary="UserEmail"
             android:title="Registered Email"/>
-        <Preference
+        <EditTextPreference
             android:key="pref_key_user_password"
-            android:summary="change password"
+            android:summary="Change password"
             android:title="User Password"/>
+        <EditTextPreference
+            android:key="pref_key_user_birthday"
+            android:summary="Birthday"
+            android:title="Birthday"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Privacy"
@@ -22,7 +30,7 @@
             android:defaultValue="true"/>
         <CheckBoxPreference
             android:key="pref_key_user_history_public"
-            android:summary="Allow all friends to see history"
+            android:summary="Allow history to be viewed by all friends"
             android:title="Share History"
             android:defaultValue="true"/>
     </PreferenceCategory>

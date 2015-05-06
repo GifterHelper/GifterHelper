@@ -87,6 +87,7 @@ public class HomeActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(HomeActivity.this,SettingsActivity.class);
+            intent.putExtra("id",this.id);
             HomeActivity.this.startActivity(intent);
             return true;
         }

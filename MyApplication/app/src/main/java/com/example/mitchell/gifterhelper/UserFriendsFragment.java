@@ -71,7 +71,7 @@ public class UserFriendsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s == null){
+                if(userFriendAdapter == null || s == null){
                     return;
                 }else{
                     userFriendAdapter.filter(s.toString());

@@ -14,8 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +99,21 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
                     e.printStackTrace();
                 }
 
+            }
+        });
+
+        Button removeButton = (Button) view.findViewById(R.id.wishlist_remove_item);
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    Item item = Items_display.remove(position);
+                    String id = item.getObjectId();
+                    ParseObject.createWithoutData("Item",id).deleteEventually();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         return view;
