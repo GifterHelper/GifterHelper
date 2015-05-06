@@ -70,6 +70,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 final EditText itemName = new EditText(view.getContext());
+                //Pulls the item from the parse database if we do not have it already
                 try{
                     Item item = Items_display.get(position).fetchIfNeeded();
                     itemName.setText(item.getName());
@@ -84,6 +85,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
                             Log.d("GifterHelper", "Editing item in user wishlist" + item);
                             //update current;
                             Items_display.get(position).saveInBackground();
+                            //Hide software keyboard
                             hide_keyboard_from(view.getContext(), view);
                         }
                     });
@@ -109,6 +111,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
                 try{
                     Item item = Items_display.remove(position);
                     String id = item.getObjectId();
+                    //Call to remove item from database
                     ParseObject.createWithoutData("Item",id).deleteEventually();
 
                 } catch (Exception e) {
@@ -119,16 +122,21 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
         return view;
     }
 
-
+    /**
+     * Filters the displayed text to be limited to what was entered into the search entry
+     * @param charText
+     */
     public void filter(String charText){
         Log.d("GifterHelper", "Filtering UserWishlist");
         charText = charText.toString().toLowerCase();
         Log.d("GifterHelper", "Filtering with " + charText);
+        //We
         Items_display.clear();
         for(int i = 0; i < Items.size(); i++)
         {
             Item item = Items.get(i);
             Log.d("GifterHelper","Item name " + item.getName());
+            //If one of the items have the text that we entered we add it to be displayed
             if(item.getName().toLowerCase().contains(charText)){
                 Log.d("GifterHelper","Constraint equals " + item.getName());
                 Items_display.add(item);

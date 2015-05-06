@@ -13,8 +13,11 @@ import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -64,11 +67,12 @@ public class MainActivity extends Activity {
                                     String id = users.get(0).getId();
                                     String userName = users.get(0).getUserName();
                                     String userPass = users.get(0).getPassword();
-                                    Log.d("GifterHelper","Id is : " + id);
+                                    Log.d("GifterHelper", "Id is : " + id);
                                     Log.d("GifterHelper", "Name is : " + userName);
                                     Log.d("GifterHelper", "Password is : " + userPass);
                                     //Load homepage
                                     Log.i("GifterHelper", "Valid Username");
+
                                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     intent.putExtra("id",id);
                                     MainActivity.this.startActivity(intent);

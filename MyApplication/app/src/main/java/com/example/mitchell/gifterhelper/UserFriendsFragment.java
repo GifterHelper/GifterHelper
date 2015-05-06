@@ -46,7 +46,7 @@ public class UserFriendsFragment extends Fragment {
         EditText friendSearch = (EditText) view.findViewById(R.id.UserSearchFriend);
         friendList = new ArrayList<Friend>();
         //We get the id of the user from the UserActivity
-        this.id = ((UserActivity)getActivity()).getID();
+        this.id = getActivity().getIntent().getStringExtra("id");
         Log.d("GifterHelper", "id " + id);
         //Pull list of friends
         ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
@@ -61,6 +61,7 @@ public class UserFriendsFragment extends Fragment {
                         }
                         userFriendAdapter = new UserFriendAdapter(getActivity().getBaseContext(), friendList);
                         friends.setAdapter(userFriendAdapter);
+                        friends.setTextFilterEnabled(true);
                     }
                 });
 

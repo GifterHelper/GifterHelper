@@ -41,6 +41,8 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
         }
         TextView name = (TextView) view.findViewById(R.id.UserFriendName);
         name.setText(friends_display.get(position).getUserName());
+
+
         Button removeFriend = (Button) view.findViewById(R.id.UserRemoveFriend);
         removeFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +72,22 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
         for(int i = 0; i < friends.size(); i++)
         {
             Friend friend = friends.get(i);
-            Log.d("GifterHelper","Friend name " + friend.getName());
-            if(friend.getName().toLowerCase().contains(charText)){
+            Log.d("GifterHelper","Friend name " + friend.getUserName());
+            if(friend.getUserName().toLowerCase().contains(charText)){
                 Log.d("GifterHelper","Constraint is: " + friend.getName());
                 friends_display.add(friend);
             }
         }
         notifyDataSetChanged();
+    }
+    //Need get count to render the correct number
+    @Override
+    public int getCount() {
+        return friends_display.size();
+    }
+
+    @Override
+    public Friend getItem(int position) {
+        return friends_display.get(position);
     }
 }

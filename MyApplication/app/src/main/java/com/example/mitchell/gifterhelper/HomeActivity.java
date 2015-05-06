@@ -36,6 +36,7 @@ public class HomeActivity extends ActionBarActivity {
         FriendView = (ListView) findViewById(R.id.FriendLayout);
         friends = new ArrayList<Friend>();
         ParseQuery<User> query = new ParseQuery<User>(User.class);
+        query.fromLocalDatastore();
         query.getInBackground(id,new GetCallback<User>() {
             @Override
             public void done(User user, ParseException e) {

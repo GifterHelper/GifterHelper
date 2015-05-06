@@ -41,7 +41,7 @@ public class UserWishlistFragment extends Fragment {
         rootView = inflater.inflate(R.layout.user_wishlist_fragment,container,false);
         //Note need to use findViewById from the rootview as that is the view that we are going to be displaying
         itemView = (ListView) rootView.findViewById(R.id.UserWishList);
-
+        //Gets the user id from the extra
         String id = getActivity().getIntent().getStringExtra("id");
         items = new ArrayList<Item>();
 
@@ -49,6 +49,7 @@ public class UserWishlistFragment extends Fragment {
         userQuery.getInBackground(id, new GetCallback<User>() {
             @Override
             public void done(User user, ParseException e) {
+                //Once we have the user's data we set the wishlist and display the info
                 items = (ArrayList<Item>) user.getWishlist();
                 Log.d("GifterHelper", "Wishlist size : " + items.size());
                 wishlistAdapter = new UserWishlistAdapter(getActivity().getBaseContext(), items);
@@ -82,6 +83,7 @@ public class UserWishlistFragment extends Fragment {
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Uses the view that the fragment is called in
                 AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
                 final EditText itemName = new EditText(rootView.getContext());
                 builder.setTitle("Add Item");
@@ -107,7 +109,7 @@ public class UserWishlistFragment extends Fragment {
                                 });
                             }
                         });
-                        //update current;
+                        //Hide software keyboard after exit from window
                         hide_keyboard_from(getActivity().getBaseContext(), getView());
                     }
                 });
