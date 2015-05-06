@@ -25,7 +25,6 @@ public class UserPagerAdapter extends FragmentStatePagerAdapter {
         return PAGE_COUNT;
     }
 
-    //TODO Set up so that we can go between fragments w/o having to reinitialize if possible
     @Override
     public Fragment getItem(int position) {
         Log.d("GifterHelper", "Position " + position);

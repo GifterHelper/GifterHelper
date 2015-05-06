@@ -33,7 +33,7 @@ public class FriendHistoryFragment extends Fragment {
         //ListView itemView = (ListView) mainView.findViewById(R.id.UserHistoryList);
         ArrayList<Item> items = new ArrayList<Item>();
         User user = new User();
-        String id = getActivity().getIntent().getStringExtra("id");
+        String id = getActivity().getIntent().getStringExtra("friendId");
         ParseQuery<User> query = new ParseQuery<User>(User.class);
         query.getInBackground(id , new GetCallback<User>() {
             @Override
