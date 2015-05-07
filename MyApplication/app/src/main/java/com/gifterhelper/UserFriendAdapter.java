@@ -9,6 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +23,8 @@ import java.util.List;
 public class UserFriendAdapter extends ArrayAdapter<Friend> {
     ArrayList<Friend> friends;
     ArrayList<Friend> friends_display = null;
+    String id;
+
     public UserFriendAdapter(Context context, int resource) {
         super(context, resource);
     }
@@ -47,12 +54,29 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
         removeFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("GifterHelper","Removing friend " + friends_display.get(position).getName());
                 //Handle Backend
                 //We remove the friend from the display list first then we remove it from the
                 //stored friend list.
-                Friend removedFriend = friends_display.remove(position);
-                friends.remove(removedFriend);
+                final Friend removedFriend = friends_display.remove(position);
+                boolean removed = friends.remove(removedFriend);
+                ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
+                userParseQuery.getInBackground(id, new GetCallback<User>() {
+                    @Override
+                    public void done(User user, ParseException e) {
+                        List<User> friends = user.getFriends();
+                        user.removeFriendByName(removedFriend.getUserName());
+                        user.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e == null){
+
+                                }
+                                Log.d("GifterHelper", "updated friend");
+                            }
+                        });
+                        //user.removeFriendByName(removedFriend.getUserName());
+                    }
+                });
                 notifyDataSetChanged();
             }
         });
@@ -89,5 +113,9 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
     @Override
     public Friend getItem(int position) {
         return friends_display.get(position);
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 }

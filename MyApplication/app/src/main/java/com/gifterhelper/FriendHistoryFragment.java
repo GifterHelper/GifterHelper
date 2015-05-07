@@ -27,10 +27,11 @@ public class FriendHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //super.onCreateView(inflater, container, savedInstanceState);
 
-        View mainView = inflater.inflate(R.layout.friends_wishlist,container,false);
+        View mainView = inflater.inflate(R.layout.friends_history,container,false);
 
         listView = (ListView) mainView.findViewById(R.id.friend_history);
         //ListView itemView = (ListView) mainView.findViewById(R.id.UserHistoryList);
+        history = new ArrayList<>();
         ArrayList<Item> items = new ArrayList<Item>();
         User user = new User();
         String id = getActivity().getIntent().getStringExtra("friendId");
@@ -43,6 +44,15 @@ public class FriendHistoryFragment extends Fragment {
                 }
                 else {
                         List<Item> friendItems = user.getHistory();
+                        if(friendItems == null){
+                            friendItems = new ArrayList<Item>();
+                            Item temp = new Item();
+                            temp.setName("No History");
+                            friendItems.add(temp);
+                        }
+                        if(listView == null){
+                            Log.e("GifterHelper", "Null listView");
+                        }
                         history.addAll(friendItems);
                         FriendHistoryAdapter friendlyAdapter = new FriendHistoryAdapter(getActivity().getBaseContext(),user.getHistory());
                         listView.setAdapter(friendlyAdapter);

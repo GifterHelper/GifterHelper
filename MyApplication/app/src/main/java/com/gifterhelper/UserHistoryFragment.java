@@ -29,7 +29,8 @@ public class UserHistoryFragment extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.UserHistoryList);
         history = new ArrayList<Item>();
-        User user = new User();
+
+        //Get user id from UserActivity intent
         String id = getActivity().getIntent().getStringExtra("id");
         ParseQuery<User> query = new ParseQuery<User>(User.class);
         query.getInBackground(id,new GetCallback<User>() {

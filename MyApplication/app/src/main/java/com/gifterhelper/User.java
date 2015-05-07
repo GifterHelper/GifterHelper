@@ -1,5 +1,7 @@
 package com.gifterhelper;
 
+import android.util.Log;
+
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseClassName;
@@ -94,6 +96,8 @@ public class User extends ParseObject implements Profile {
         return (List<User>)get("friends");
     }
 
+    public void setFriendList(List<User> friends) { put("friends", friends);}
+
     public void initHistory(){
         List<Item> history = new ArrayList<Item>();
         put("history",history);
@@ -141,6 +145,21 @@ public class User extends ParseObject implements Profile {
         List<User> friends = (List<User>)get("friends");
         friends.add(friend);
         put("friends", friends);
+    }
+
+    public void removeFriendByName(String friendUserName){
+        List<User> friends = (List<User>)get("friends");
+        Log.d("GifterHelper", "Searching friends list for" + friendUserName);
+        for(int i = 0; i < friends.size(); i++){
+            Log.d("GifterHelper", "Comparing to " + friends.get(i).getUserName());
+            if(friends.get(i).getUserName().equals(friendUserName)){
+                User removed = friends.remove(i);
+                Log.d("GifterHelper", "Removed friend " + removed.getUserName());
+                put("friends", friends);
+                return;
+            }
+        }
+        Log.d("GifterHelper", "Friend not found");
     }
 }
 

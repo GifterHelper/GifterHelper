@@ -54,12 +54,13 @@ public class UserFriendsFragment extends Fragment {
                     @Override
                     public void done(User user, ParseException e) {
                         userLocal = user;
-                        List<User> friendUser = user.getFriends();
+                        List<User> friendUser = userLocal.getFriends();
                         for(User friend : friendUser)
                         {
                             friendList.add(new Friend(friend));
                         }
                         userFriendAdapter = new UserFriendAdapter(getActivity().getBaseContext(), friendList);
+                        userFriendAdapter.setId(id);
                         friends.setAdapter(userFriendAdapter);
                         friends.setTextFilterEnabled(true);
                     }

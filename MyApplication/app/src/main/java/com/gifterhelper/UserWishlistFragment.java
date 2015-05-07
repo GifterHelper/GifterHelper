@@ -39,16 +39,17 @@ public class UserWishlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //InflateLayout of fragment
         rootView = inflater.inflate(R.layout.user_wishlist_fragment,container,false);
-        //Note need to use findViewById from the rootview as that is the view that we are going to be displaying
-        itemView = (ListView) rootView.findViewById(R.id.UserWishList);
-        //Gets the user id from the extra
         String id = getActivity().getIntent().getStringExtra("id");
-        items = new ArrayList<Item>();
 
         ParseQuery<User> userQuery = new ParseQuery<User>(User.class);
         userQuery.getInBackground(id, new GetCallback<User>() {
             @Override
             public void done(User user, ParseException e) {
+
+                //Note need to use findViewById from the rootview as that is the view that we are going to be displaying
+                itemView = (ListView) rootView.findViewById(R.id.UserWishList);
+                //Gets the user id from the extra
+                items = new ArrayList<Item>();
                 //Once we have the user's data we set the wishlist and display the info
                 items = (ArrayList<Item>) user.getWishlist();
                 Log.d("GifterHelper", "Wishlist size : " + items.size());

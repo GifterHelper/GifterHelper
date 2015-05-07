@@ -36,12 +36,13 @@ public class HomeActivity extends ActionBarActivity {
         FriendView = (ListView) findViewById(R.id.FriendLayout);
         friends = new ArrayList<Friend>();
         ParseQuery<User> query = new ParseQuery<User>(User.class);
-        query.fromLocalDatastore();
+        //query.fromLocalDatastore();
         query.getInBackground(id,new GetCallback<User>() {
             @Override
             public void done(User user, ParseException e) {
                 if(user == null){
                     Log.e("GifterHelper", "Could not get id");
+                    Log.e("GifterHelper", e.getMessage(),e);
                 }else{
                     List<User> friendUser = user.getFriends();
 
@@ -104,4 +105,28 @@ public class HomeActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //Reupdate the Friend List when reentering the home activity
+        ParseQuery<User> query = new ParseQuery<User>(User.class);
+        query.fromLocalDatastore();
+        query.getInBackground(id, new GetCallback<User>() {
+            @Override
+            public void done(User user, ParseException e) {
+                if (user == null) {
+                    Log.e("GifterHelper", "Could not get id");
+                } else {
+                    List<User> friendUser = user.getFriends();
+                    //Clear friend list
+                    friends.clear();
+                    for (User friend : friendUser) {
+                        friends.add(new Friend(friend));
+                    }
+                    ArrayAdapter friend_display = new FriendAdapter(HomeActivity.this, friends);
+                    FriendView.setAdapter(friend_display);
+                }
+            }
+        });
+    }
 }
