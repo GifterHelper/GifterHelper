@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -35,11 +36,30 @@ public class HomeActivity extends ActionBarActivity {
 
         FriendView = (ListView) findViewById(R.id.FriendLayout);
         friends = new ArrayList<Friend>();
-        ParseQuery<User> query = new ParseQuery<User>(User.class);
-        //query.fromLocalDatastore();
-        query.getInBackground(id,new GetCallback<User>() {
+        //Leaving for debug purposes
+        //ParseQuery<User> query = new ParseQuery<User>(User.class)
+//        query.getInBackground(id,new GetCallback<User>() {
+//            @Override
+//            public void done(User user, ParseException e) {
+//                if(user == null){
+//                    Log.e("GifterHelper", "Could not get id");
+//                    Log.e("GifterHelper", e.getMessage(),e);
+//                }else{
+//                    List<User> friendUser = user.getFriends();
+//
+//                    for(User friend : friendUser){
+//                        friends.add(new Friend(friend));
+//                    }
+//                    ArrayAdapter friend_display = new FriendAdapter(HomeActivity.this, friends);
+//                    FriendView.setAdapter(friend_display);
+//                }
+//            }
+//        });
+        ParseObject object = ParseObject.createWithoutData("User", id);
+        object.fetchFromLocalDatastoreInBackground(new GetCallback<ParseObject>() {
             @Override
-            public void done(User user, ParseException e) {
+            public void done(ParseObject parseObject, ParseException e) {
+                User user = (User)parseObject;
                 if(user == null){
                     Log.e("GifterHelper", "Could not get id");
                     Log.e("GifterHelper", e.getMessage(),e);
@@ -54,7 +74,6 @@ public class HomeActivity extends ActionBarActivity {
                 }
             }
         });
-
 
         //Set spinner strings
         Spinner spinner = (Spinner) findViewById(R.id.HomeSortFriendSpiner);

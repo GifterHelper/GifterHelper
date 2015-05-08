@@ -94,6 +94,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
                             Items_display.get(position).saveInBackground();
                             //Hide software keyboard
                             hide_keyboard_from(view.getContext(), view);
+                            notifyDataSetChanged();
                         }
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -116,14 +117,19 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
             @Override
             public void onClick(View v) {
                 try{
+                    //We remove the item from the display then remove it in the background
                     final Item item = Items_display.remove(position);
+                    Items.remove(item);
                     String id = item.getObjectId();
-                    //Call to remove item from user
+                    notifyDataSetChanged();
+                    //After we update the display, we update the database
+                    //TODO: Hold of call?
                     ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
                     userParseQuery.getInBackground(item.getCreatorUser(), new GetCallback<User>() {
                         @Override
                         public void done(User user, ParseException e) {
                             user.removeItem(item);
+                            user.saveInBackground();
                         }
                     });
                     //Call to remove item from database
@@ -169,6 +175,13 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
     @Override
     public Item getItem(int position) {
         return Items_display.get(position);
+    }
+
+    @Override
+    public void add(Item object) {
+        Items_display.add(object);
+        Items.add(object);
+        notifyDataSetChanged();
     }
 
     public static void hide_keyboard_from(Context context, View view) {

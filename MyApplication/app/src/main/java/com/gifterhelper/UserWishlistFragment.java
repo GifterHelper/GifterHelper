@@ -35,6 +35,7 @@ public class UserWishlistFragment extends Fragment {
     ArrayList<Item> items;
     ListView itemView;
     View rootView;
+    Item item;
     UserWishlistAdapter wishlistAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,10 +98,11 @@ public class UserWishlistFragment extends Fragment {
                         Log.d("GifterHelper", "Adding item to user wishlist" + itemNamestr);
                         //TODO: Hold off on adding items until we navigate away from the fragment
                         ParseQuery<User> userQuery = new ParseQuery<User>(User.class);
+                        userQuery.fromLocalDatastore();
                         userQuery.getInBackground(getActivity().getIntent().getStringExtra("id"), new GetCallback<User>() {
                             @Override
                             public void done(User user, ParseException e) {
-                                Item item = new Item();
+                                item = new Item();
                                 item.setName(itemNamestr);
                                 item.setCreatorUser(getActivity().getIntent().getStringExtra("id"));
                                 Log.d("GifterHelper", "before add item to list " + user.getWishlist().size());
@@ -109,6 +111,7 @@ public class UserWishlistFragment extends Fragment {
                                     @Override
                                     public void done(ParseException e) {
                                         Log.d("GifterHelper", "added item to list ");
+                                        wishlistAdapter.add(item);
                                     }
                                 });
                             }

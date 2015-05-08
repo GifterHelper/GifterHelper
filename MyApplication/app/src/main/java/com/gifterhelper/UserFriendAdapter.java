@@ -74,7 +74,6 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
                                 Log.d("GifterHelper", "updated friend");
                             }
                         });
-                        //user.removeFriendByName(removedFriend.getUserName());
                     }
                 });
                 notifyDataSetChanged();
@@ -117,5 +116,16 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
 
     public void setId(String id){
         this.id = id;
+    }
+
+    /**
+     * Update the display with the newly added friend
+     * @param object
+     */
+    @Override
+    public void add(Friend object) {
+        friends.add(object);
+        friends_display.add(object);
+        notifyDataSetChanged();
     }
 }

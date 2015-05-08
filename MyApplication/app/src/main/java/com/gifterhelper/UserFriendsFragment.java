@@ -106,7 +106,10 @@ public class UserFriendsFragment extends Fragment {
                                     Log.d("GifterHelper", "Size : " + list.size());
                                     Log.d("GifterHelper", "Did not add friend " + email);
                                 } else {
-                                    friendList.add(new Friend(list.get(0)));
+                                    //We update the gui first
+                                    Friend friend = new Friend(list.get(0));
+                                    userFriendAdapter.add(friend);
+                                    //Then we update the database
                                     userLocal.addFriend(list.get(0));
                                     userLocal.saveInBackground(new SaveCallback() {
                                         @Override
@@ -114,6 +117,7 @@ public class UserFriendsFragment extends Fragment {
                                             Log.d("GifterHelper", "Added friend with email " + email);
                                         }
                                     });
+
                                 }
                             }
                         });

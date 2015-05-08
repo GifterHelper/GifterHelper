@@ -44,7 +44,8 @@ public class FriendHistoryFragment extends Fragment {
                 }
                 else {
                         List<Item> friendItems = user.getHistory();
-                        if(friendItems == null){
+                        Log.d("GifterHelper", "Friend history size = " + friendItems.size());
+                        if(friendItems.size() == 0 || friendItems == null){
                             friendItems = new ArrayList<Item>();
                             Item temp = new Item();
                             temp.setName("No History");

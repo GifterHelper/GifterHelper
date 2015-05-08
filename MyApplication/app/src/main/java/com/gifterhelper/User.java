@@ -15,6 +15,22 @@ import java.util.List;
 @ParseClassName("User")
 public class User extends ParseObject implements Profile {
 
+    private String id;
+    private List<User> friends;
+    private List<Item> wishlist;
+    private List<Item> history;
+
+    public User(){
+        super();
+    }
+
+    public void saveDetail(String id, List<User> friends, List<Item> wishlist, List<Item> history){
+        this.id = id;
+        this.friends = friends;
+        this.wishlist = wishlist;
+        this.history = history;
+    }
+
     @Override
     public String getId() {
         return this.getObjectId();
