@@ -42,6 +42,12 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
         this.Items_display.addAll(items);
         this.Items = new ArrayList<Item>();
         this.Items.addAll(items);
+//        //TODO Find a way to pin wishlist items
+//        try {
+//            ParseObject.pinAll(GifterHelper.USER_WISHLIST,Items);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -57,6 +63,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
         //Sets the GUI Elements
         TextView name = (TextView) view.findViewById(R.id.wishlist_item_name);
         try{
+            //TODO: Find a way to load from local data store
             Item item = Items_display.get(position).fetchIfNeeded();
             name.setText(item.getName());
         }catch (ParseException e) {
@@ -103,16 +110,25 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
 
             }
         });
-
+        //TODO: Can we call to update removed items later?
         Button removeButton = (Button) view.findViewById(R.id.wishlist_remove_item);
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
-                    Item item = Items_display.remove(position);
+                    final Item item = Items_display.remove(position);
                     String id = item.getObjectId();
+                    //Call to remove item from user
+                    ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
+                    userParseQuery.getInBackground(item.getCreatorUser(), new GetCallback<User>() {
+                        @Override
+                        public void done(User user, ParseException e) {
+                            user.removeItem(item);
+                        }
+                    });
                     //Call to remove item from database
                     ParseObject.createWithoutData("Item",id).deleteEventually();
+
 
                 } catch (Exception e) {
                     e.printStackTrace();

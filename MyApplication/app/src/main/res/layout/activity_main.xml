@@ -23,6 +23,7 @@
         android:background="#CCCCE0"
         android:textColor="#000000"/>
     <EditText
+        android:inputType="textPassword"
         android:id="@+id/PasswordLogin"
         android:layout_width="match_parent"
         android:layout_height="40dp"

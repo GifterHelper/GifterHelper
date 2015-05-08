@@ -2,6 +2,7 @@ package com.gifterhelper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class UserWishlistFragment extends Fragment {
         //InflateLayout of fragment
         rootView = inflater.inflate(R.layout.user_wishlist_fragment,container,false);
         String id = getActivity().getIntent().getStringExtra("id");
-
+        //TODO: Set up local storage, only update database to the addition of items when navigating away
         ParseQuery<User> userQuery = new ParseQuery<User>(User.class);
         userQuery.getInBackground(id, new GetCallback<User>() {
             @Override
@@ -94,12 +95,14 @@ public class UserWishlistFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         final String itemNamestr = itemName.getText().toString();
                         Log.d("GifterHelper", "Adding item to user wishlist" + itemNamestr);
+                        //TODO: Hold off on adding items until we navigate away from the fragment
                         ParseQuery<User> userQuery = new ParseQuery<User>(User.class);
                         userQuery.getInBackground(getActivity().getIntent().getStringExtra("id"), new GetCallback<User>() {
                             @Override
                             public void done(User user, ParseException e) {
                                 Item item = new Item();
                                 item.setName(itemNamestr);
+                                item.setCreatorUser(getActivity().getIntent().getStringExtra("id"));
                                 Log.d("GifterHelper", "before add item to list " + user.getWishlist().size());
                                 user.addItem(item);
                                 user.saveInBackground(new SaveCallback() {

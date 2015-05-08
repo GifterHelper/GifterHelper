@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
                         @Override
                         public void done(List<User> users, ParseException e) {
                             if(users.size() > 1){
+                                Toast.makeText(MainActivity.this, "Username/Password not valid", Toast.LENGTH_SHORT).show();
                                 Log.d("GifterHelper", "Retrieved more than one user");
                             }
                             else if(users.size() == 0){
@@ -67,12 +68,29 @@ public class MainActivity extends Activity {
                                     String id = users.get(0).getId();
                                     String userName = users.get(0).getUserName();
                                     String userPass = users.get(0).getPassword();
-                                    Log.d("GifterHelper", "Id is : " + id);
+                                    /*Log.d("GifterHelper", "Id is : " + id);
                                     Log.d("GifterHelper", "Name is : " + userName);
-                                    Log.d("GifterHelper", "Password is : " + userPass);
+                                    Log.d("GifterHelper", "Password is : " + userPass);*/
                                     //Load homepage
-                                    Log.i("GifterHelper", "Valid Username");
-
+                                    Log.i("GifterHelper", "Valid Username & Password login");
+//                                    User user = users.get(0);
+//                                    //Pin saved user in background
+//                                    user.pinInBackground(GifterHelper.USER_GROUP_NAME, new SaveCallback() {
+//                                        @Override
+//                                        public void done(ParseException e) {
+//                                            if (isFinishing()) {
+//                                                return;
+//                                            }
+//                                            if (e == null) {
+//                                                setResult(Activity.RESULT_OK);
+//                                                finish();
+//                                            } else {
+//                                                Toast.makeText(getApplicationContext(),
+//                                                        "Error saving: " + e.getMessage(),
+//                                                        Toast.LENGTH_LONG).show();
+//                                            }
+//                                        }
+//                                    });
                                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     intent.putExtra("id",id);
                                     MainActivity.this.startActivity(intent);

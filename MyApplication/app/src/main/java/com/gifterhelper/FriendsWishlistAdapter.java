@@ -34,9 +34,12 @@ public class FriendsWishlistAdapter extends ArrayAdapter<Item> {
     public FriendsWishlistAdapter(Context context, List<Item> items) {
         super(context, R.layout.item_layout, items);
         this.Items_display = new ArrayList<Item>();
-        this.Items_display.addAll(items);
         this.Items = new ArrayList<Item>();
-        this.Items.addAll(items);
+        if(items.size() != 0){
+            this.Items_display.addAll(items);
+            this.Items.addAll(items);
+        }
+
     }
 
     @Override
@@ -52,24 +55,34 @@ public class FriendsWishlistAdapter extends ArrayAdapter<Item> {
 
         //GUI
         TextView name = (TextView) view.findViewById(R.id.friend_wishlist_itemname);
-        try {
-            item = Items_display.get(position).fetchIfNeeded();
-            name.setText(item.getName());
-            Log.d("GifterHelper", "name " + item.getName());
-        } catch (ParseException e) {
-           e.printStackTrace();
+        if(Items_display.size() != 0){
+            try {
+                item = Items_display.get(position).fetchIfNeeded();
+                name.setText(item.getName());
+                Log.d("GifterHelper", "name " + item.getName());
+            } catch (ParseException e) {
+                Log.e("GifterHelper", e.getMessage(),e);
+            }
+        }else{
+            Log.d("GifterHelper", "Friend wishlist has no items");
         }
+
         final Button buyButton = (Button) view.findViewById(R.id.friend_button_wishlist);
         final Button colorButton = (Button) view.findViewById(R.id.friends_box_wishlist);
 
         //Sets up the default values for the color button and text for buy button
-        if (item.getPurchased()) {
-            buyButton.setText("Cancel");
-            colorButton.setBackgroundColor(Color.RED);
-        } else if (!item.getPurchased()) {
-            buyButton.setText("Will Buy");
-            colorButton.setBackgroundColor(Color.GREEN);
+        if(item != null){
+            if (item.getPurchased()) {
+                buyButton.setText("Cancel");
+                colorButton.setBackgroundColor(Color.RED);
+            } else if (!item.getPurchased()) {
+                buyButton.setText("Will Buy");
+                colorButton.setBackgroundColor(Color.GREEN);
+            }
+        }else{
+            Log.d("GifterHelper", "No item in friend wishlist");
         }
+
 
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override

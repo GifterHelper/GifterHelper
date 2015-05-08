@@ -38,4 +38,14 @@ public class FriendHistoryAdapter extends ArrayAdapter<Item> {
         name.setText(Items.get(position).getName());
         return view;
     }
+
+    @Override
+    public int getCount() {
+        return Items.size();
+    }
+
+    @Override
+    public Item getItem(int position) {
+        return Items.get(position);
+    }
 }

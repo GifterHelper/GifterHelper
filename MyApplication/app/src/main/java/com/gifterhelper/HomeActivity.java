@@ -97,7 +97,7 @@ public class HomeActivity extends ActionBarActivity {
 
         else if(id == R.id.user_profile){
             Intent intent = new Intent(HomeActivity.this,UserActivity.class);
-            intent.putExtra("id",this.id);
+            intent.putExtra("id",getIntent().getStringExtra("id"));
             HomeActivity.this.startActivity(intent);
             return true;
         }
@@ -108,9 +108,8 @@ public class HomeActivity extends ActionBarActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        //Reupdate the Friend List when reentering the home activity
+        //Reupdate the Friend List from database when reentering the home activity
         ParseQuery<User> query = new ParseQuery<User>(User.class);
-        query.fromLocalDatastore();
         query.getInBackground(id, new GetCallback<User>() {
             @Override
             public void done(User user, ParseException e) {

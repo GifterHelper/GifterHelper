@@ -52,6 +52,14 @@ public class FriendWishlistFragment extends Fragment {
             @Override
             public void done(User user, ParseException e) {
                 items = (ArrayList<Item>) user.getWishlist();
+                for(int i = 0; i < items.size(); i++){
+                    try {
+                        items.get(i).fetchIfNeeded();
+                        Log.d("GifterHelper", "Item " + i + " in wishlist is " + items.get(i).getName());
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 Log.d("GifterHelper", "Wishlist size : " + items.size());
                 wishlistAdapter = new FriendsWishlistAdapter(getActivity().getBaseContext(), items);
                 wishlistAdapter.setId(userId);

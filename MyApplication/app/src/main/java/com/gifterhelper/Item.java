@@ -48,4 +48,9 @@ public class Item extends ParseObject {
     public void setBuyerUser(String user) {
         put("BuyerUser",user);
     }
+
+    public String getCreatorUser() {return getString("creator");}
+
+    public void setCreatorUser(String id) {put("creator", id);}
+
 }
