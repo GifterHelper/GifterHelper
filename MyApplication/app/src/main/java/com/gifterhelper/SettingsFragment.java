@@ -43,6 +43,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         //Retrieve User
         ParseQuery<User> parseQuery = new ParseQuery<User>(User.class);
+        parseQuery.fromLocalDatastore();
         parseQuery.getInBackground(id, new GetCallback<User>() {
             @Override
             public void done(User user, ParseException e) {
@@ -87,11 +88,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if(key.equals(KEY_PREF_EMAIL)){
             emailPref = (EditTextPreference) findPreference(key);
             final String email = emailPref.getText().toString();
+            emailPref.setText("");
             localUser.setUserName(email);
             localUser.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     Log.d("GifterHelper", "changed email to " + email);
+
                 }
             });
         }

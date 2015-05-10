@@ -15,6 +15,8 @@ import java.util.List;
 @ParseClassName("User")
 public class User extends ParseObject implements Profile {
 
+    //Local variables to store user information
+    //Otherwise we only obtain the formation from the remote db
     private String id;
     private List<User> friends;
     private List<Item> wishlist;

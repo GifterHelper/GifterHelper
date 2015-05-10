@@ -41,7 +41,6 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if(view == null){
-
             LayoutInflater inflater;
             inflater = LayoutInflater.from(getContext());
             view = inflater.inflate(R.layout.user_friends_layout,null);
@@ -69,7 +68,6 @@ public class UserFriendAdapter extends ArrayAdapter<Friend> {
                             @Override
                             public void done(ParseException e) {
                                 if(e == null){
-
                                 }
                                 Log.d("GifterHelper", "updated friend");
                             }

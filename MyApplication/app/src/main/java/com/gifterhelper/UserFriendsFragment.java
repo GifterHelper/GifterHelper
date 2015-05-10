@@ -51,20 +51,20 @@ public class UserFriendsFragment extends Fragment {
         //Pull list of friends
         ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
         userParseQuery.getInBackground(id,new GetCallback<User>() {
-                    @Override
-                    public void done(User user, ParseException e) {
-                        userLocal = user;
-                        List<User> friendUser = userLocal.getFriends();
-                        for(User friend : friendUser)
-                        {
-                            friendList.add(new Friend(friend));
-                        }
-                        userFriendAdapter = new UserFriendAdapter(getActivity().getBaseContext(), friendList);
-                        userFriendAdapter.setId(id);
-                        friends.setAdapter(userFriendAdapter);
-                        friends.setTextFilterEnabled(true);
-                    }
-                });
+            @Override
+            public void done(User user, ParseException e) {
+                userLocal = user;
+                List<User> friendUser = userLocal.getFriends();
+                for(User friend : friendUser)
+                {
+                    friendList.add(new Friend(friend));
+                }
+                userFriendAdapter = new UserFriendAdapter(getActivity().getBaseContext(), friendList);
+                userFriendAdapter.setId(id);
+                friends.setAdapter(userFriendAdapter);
+                friends.setTextFilterEnabled(true);
+            }
+        });
 
         friendSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -108,6 +108,9 @@ public class UserFriendsFragment extends Fragment {
                                 } else {
                                     //We update the gui first
                                     Friend friend = new Friend(list.get(0));
+                                    //Adds user to friend's list
+                                    list.get(0).addFriend(userLocal);
+                                    list.get(0).saveInBackground();
                                     userFriendAdapter.add(friend);
                                     //Then we update the database
                                     userLocal.addFriend(list.get(0));

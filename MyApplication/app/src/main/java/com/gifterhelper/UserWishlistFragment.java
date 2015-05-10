@@ -104,6 +104,7 @@ public class UserWishlistFragment extends Fragment {
                             public void done(User user, ParseException e) {
                                 item = new Item();
                                 item.setName(itemNamestr);
+                                //We have a creator id so that we can easily remove the item from the user
                                 item.setCreatorUser(getActivity().getIntent().getStringExtra("id"));
                                 Log.d("GifterHelper", "before add item to list " + user.getWishlist().size());
                                 user.addItem(item);

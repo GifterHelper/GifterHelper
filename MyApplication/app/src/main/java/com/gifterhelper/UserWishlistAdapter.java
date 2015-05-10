@@ -42,7 +42,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
         this.Items_display.addAll(items);
         this.Items = new ArrayList<Item>();
         this.Items.addAll(items);
-//        //TODO Find a way to pin wishlist items
+        //TODO Find a way to pin wishlist items
 //        try {
 //            ParseObject.pinAll(GifterHelper.USER_WISHLIST,Items);
 //        } catch (ParseException e) {
@@ -87,10 +87,10 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String item = itemName.getText().toString();
-
+                            //Change the name of the item
                             Items_display.get(position).setName(item);
                             Log.d("GifterHelper", "Editing item in user wishlist" + item);
-                            //update current;
+                            //update the item
                             Items_display.get(position).saveInBackground();
                             //Hide software keyboard
                             hide_keyboard_from(view.getContext(), view);
@@ -120,7 +120,13 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
                     //We remove the item from the display then remove it in the background
                     final Item item = Items_display.remove(position);
                     Items.remove(item);
+                    /*As we have saved the id of the creator we do not have to pass the id
+                    * to the adapter to know which user to remove the item from */
                     String id = item.getObjectId();
+
+                    /*We update the view before we handle the database to improve the user
+                    * expreience. The user will not have to wait for the update before the changes
+                    * take place on the screen.*/
                     notifyDataSetChanged();
                     //After we update the display, we update the database
                     //TODO: Hold of call?
@@ -152,7 +158,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
         Log.d("GifterHelper", "Filtering UserWishlist");
         charText = charText.toString().toLowerCase();
         Log.d("GifterHelper", "Filtering with " + charText);
-        //We
+        //We remove all the items in the display list and rebuild from the input
         Items_display.clear();
         for(int i = 0; i < Items.size(); i++)
         {
@@ -177,6 +183,7 @@ public class UserWishlistAdapter extends ArrayAdapter<Item>{
         return Items_display.get(position);
     }
 
+    //To allow the display to update when a user adds an item
     @Override
     public void add(Item object) {
         Items_display.add(object);

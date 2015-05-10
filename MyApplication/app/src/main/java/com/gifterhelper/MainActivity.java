@@ -75,6 +75,8 @@ public class MainActivity extends Activity {
                                     Log.d("GifterHelper", "Password is : " + userPass);*/
                                     //Load homepage
                                     Log.i("GifterHelper", "Valid Username & Password login");
+                                    //We create a new user to store the values that is necessary
+                                    //TODO find another way of storing friends, possibly new parse object
                                     User userSave = new User();
                                     userSave.saveDetail(user.getId(),user.getFriends(),user.getWishlist(),user.getHistory());
                                     user.saveInBackground();

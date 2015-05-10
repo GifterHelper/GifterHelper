@@ -11,7 +11,7 @@ import com.parse.ParseUser;
  * Created by Ethan on 4/29/2015.
  */
 public class GifterHelper extends Application {
-
+    //Possibly unneeded taken from the Parse example for localdatastore
     public static final String USER_GROUP_NAME = "USER_INFO";
     public static final String USER_WISHLIST = "USER_WISHLIST";
 
