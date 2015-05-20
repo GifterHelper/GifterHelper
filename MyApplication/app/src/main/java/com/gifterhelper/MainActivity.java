@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
                     //Backend check for user/pass
                     ParseQuery<User> userParseQuery = new ParseQuery<User>(User.class);
                     userParseQuery.whereContains("username", username.getText().toString());
-                    Log.d("GifterHelper", "Query for user");
+                    Log.d("GifterHelper", "Query for user " + username.getText().toString());
                     userParseQuery.findInBackground(new FindCallback<User>() {
                         @Override
                         public void done(List<User> users, ParseException e) {
@@ -79,8 +79,8 @@ public class MainActivity extends Activity {
                                     //TODO find another way of storing friends, possibly new parse object
                                     User userSave = new User();
                                     userSave.saveDetail(user.getId(),user.getFriends(),user.getWishlist(),user.getHistory());
-                                    user.saveInBackground();
-
+                                    //user.saveInBackground();
+                                    user.pinInBackground();
                                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     intent.putExtra("id", id);
                                     MainActivity.this.startActivity(intent);
