@@ -93,6 +93,11 @@ var appMaster = {
             $(this).addClass('active');
         });
 
+       $('.js-filter-four').on('click', function() {
+            $('.filtering').slickFilter('.four');
+            $('.filter a').removeClass('active');
+            $(this).addClass('active');
+        });
     },
 
     animateScript: function() {
