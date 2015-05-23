@@ -1,0 +1,7 @@
+.middle-col {
+    vertical-align: middle;
+}
+.row > .col-md-4, .row > .col-sm-4 {
+    display: table-cell;
+    float: none;
+}
