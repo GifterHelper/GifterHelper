@@ -60,6 +60,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     publicHistory.setChecked(localUser.getShareHistory());
 
                     namePref = (EditTextPreference) findPreference(KEY_PREF_NAME);
+
                     if(localUser.getName() != null){
                         namePref.setSummary(localUser.getName());
                     }else{
@@ -101,6 +102,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         else if(key.equals(KEY_PREF_NAME)){
             namePref = (EditTextPreference) findPreference(key);
             final String name = namePref.getText().toString();
+            emailPref.setText("");
             localUser.setName(name);
             localUser.saveInBackground(new SaveCallback() {
                 @Override
@@ -141,13 +143,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             });
         }
         else if(key.equals(KEY_PREF_BDAY)){
+            Log.d("GifterHelper", "called bday");
             bdayPref = (EditTextPreference) findPreference(key);
             final String bday = bdayPref.getText().toString();
-            localUser.setName(bday);
+            emailPref.setText("");
+            localUser.setBirthday(bday);
             localUser.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    Log.d("GifterHelper", "Changed name to " + bday);
+                    Log.d("GifterHelper", "Changed bday to " + bday);
                 }
             });
         }
