@@ -77,7 +77,9 @@ public class FriendWishlistFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                wishlistAdapter.filter(s.toString());
+                if(s!= null && wishlistAdapter != null){
+                    wishlistAdapter.filter(s.toString());
+                }
             }
 
             @Override
