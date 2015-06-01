@@ -140,6 +140,17 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 }
             });
         }
+        else if(key.equals(KEY_PREF_BDAY)){
+            bdayPref = (EditTextPreference) findPreference(key);
+            final String bday = bdayPref.getText().toString();
+            localUser.setName(bday);
+            localUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Log.d("GifterHelper", "Changed name to " + bday);
+                }
+            });
+        }
     }
 
 
