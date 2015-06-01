@@ -15,6 +15,9 @@
         android:layout_marginBottom="5dp">
         <EditText
             android:hint="Search"
+            android:textColorHint="#FFFFFF"
+            android:textColor="#FFFFFF"
+            android:background="#ff515152"
             android:id="@+id/UserSearchFriend"
             android:layout_width="0dp"
             android:layout_height="match_parent"
