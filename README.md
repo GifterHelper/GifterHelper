@@ -6,6 +6,9 @@ We are using parse for our database as it is simple and easy to integrate into o
 
 For our GUI implementation we are using a mixture of activities and fragments. Our device data storage is using two methods, parse's local data store using pinning as well as shared preferences. 
 
+###Explore our code!
+Be sure to be on the master branch as gh-pages is for our website.
+
 ###Visit Our Webiste!
 http://gifterhelper.github.io/GifterHelper/
 
