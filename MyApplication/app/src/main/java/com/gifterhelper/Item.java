@@ -8,6 +8,8 @@ import com.parse.ParseObject;
  */
 @ParseClassName("Item")
 public class Item extends ParseObject {
+    boolean purchased;
+
 
     public String getName() {
         return getString("name");

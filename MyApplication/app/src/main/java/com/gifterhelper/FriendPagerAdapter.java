@@ -24,6 +24,7 @@ public class FriendPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int i) {
+
         switch (i) {
             case 0:
                 Fragment tab1 = new FriendWishlistFragment();

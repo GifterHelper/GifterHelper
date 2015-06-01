@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,6 @@ public class FriendsWishlistAdapter extends ArrayAdapter<Item> {
     View view;
     Item item;
     String id;
-
     public FriendsWishlistAdapter(Context context, int resource) {
         super(context, resource);
     }
@@ -45,6 +45,8 @@ public class FriendsWishlistAdapter extends ArrayAdapter<Item> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         view = convertView;
+        final int pos = position;
+        Log.d("GifterHelper", "At position : " + pos);
         //If the layout
         if (view == null) {
 
@@ -72,10 +74,10 @@ public class FriendsWishlistAdapter extends ArrayAdapter<Item> {
 
         //Sets up the default values for the color button and text for buy button
         if(item != null){
-            if (item.getPurchased()) {
+            if ( item.getPurchased()) {
                 buyButton.setText("Cancel");
                 colorButton.setBackgroundColor(Color.RED);
-            } else if (!item.getPurchased()) {
+            } else if (! item.getPurchased()) {
                 buyButton.setText("Will Buy");
                 colorButton.setBackgroundColor(Color.GREEN);
             }
@@ -87,17 +89,33 @@ public class FriendsWishlistAdapter extends ArrayAdapter<Item> {
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                item = Items_display.get(pos);
+                Log.d("GifterHelper", "Changing item " + item.getName());
                 if (item.getPurchased() && item.getBuyerUser().equals(id)) {
                     item.setPurchased(false);
-                    item.saveInBackground();
+                    Log.d("GifterHelper", "not buying" + pos);
+                    Items_display.get(pos).saveInBackground();
                     buyButton.setText("Will Buy");
                     colorButton.setBackgroundColor(Color.GREEN);
-                } else if (!item.getPurchased()) {
+                    notifyDataSetChanged();
+
+                } else if (! item.getPurchased()) {
                     item.setPurchased(true);
                     item.setBuyerUser(id);
-                    item.saveInBackground();
+                    Log.d("GifterHelper", "" + Items_display.get(pos).getPurchased());
+                    Log.d("GifterHelper", "buying" + pos);
+                    Items_display.get(pos).saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Log.d("GifterHelper", "Updated item");
+                            if (e != null)
+                                Log.e("Parse Error", e.toString(), e);
+                        }
+                    });
                     buyButton.setText("Cancel");
                     colorButton.setBackgroundColor(Color.RED);
+                    notifyDataSetChanged();
+
                 }
 
             }
